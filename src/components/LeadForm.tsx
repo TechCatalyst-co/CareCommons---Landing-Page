@@ -8,10 +8,8 @@ import {
   Users, 
   Lock, 
   CheckCircle2, 
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  CalendarCheck2
+  ArrowRight, 
+  AlertCircle
 } from 'lucide-react';
 import { LeadFormData, FormValidationErrors, FormStatus } from '../types';
 
@@ -30,6 +28,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccessSubmit }) => {
 
   const [errors, setErrors] = useState<FormValidationErrors>({});
   const [status, setStatus] = useState<FormStatus>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [submittedData, setSubmittedData] = useState<LeadFormData | null>(null);
 
   const validate = (): boolean => {
@@ -72,26 +71,64 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccessSubmit }) => {
     if (errors[name as keyof FormValidationErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
+    if (errorMessage) {
+      setErrorMessage(null);
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setStatus('submitting');
+    setErrorMessage(null);
 
-    // Simulate instant secure processing
-    setTimeout(() => {
+    const nameParts = formData.fullName.trim().split(/\s+/);
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+
+    const payload = {
+      token: "9e071418-30c7-45c0-969c-6ef993a6acf9",
+      first_name: firstName,
+      last_name: lastName,
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      company: formData.agencyName.trim(),
+      message: formData.message?.trim() || `Caregiver Team Size: ${formData.caregiverCount}`,
+      source: "CareCommons Landing"
+    };
+
+    try {
+      const response = await fetch("https://fmuhmqtxwvcgbeueaueg.supabase.co/functions/v1/intake-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => '');
+        throw new Error(errorText || `Submission failed with status: ${response.status}`);
+      }
+
       setStatus('success');
       setSubmittedData({ ...formData });
       if (onSuccessSubmit) {
         onSuccessSubmit(formData);
       }
-    }, 700);
+    } catch (err: unknown) {
+      console.error('Lead intake submission error:', err);
+      setStatus('error');
+      setErrorMessage(
+        err instanceof Error && err.message 
+          ? err.message 
+          : 'Failed to submit form. Please check your network and try again.'
+      );
+    }
   };
 
   const handleReset = () => {
     setStatus('idle');
+    setErrorMessage(null);
     setFormData({
       fullName: '',
       email: '',
@@ -114,23 +151,21 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccessSubmit }) => {
           <CheckCircle2 className="w-9 h-9 text-emerald-600" />
         </div>
 
-        <h3 className="font-display text-2xl font-bold text-[#173A32] mb-1">
-          You're All Set, {submittedData.fullName.split(' ')[0]}!
+        <h3 className="font-display text-2xl font-bold text-[#173A32] mb-2">
+          Thank You, {submittedData.fullName.split(' ')[0]}!
         </h3>
-        <p className="text-sm text-[#5C6E67] mb-6">
-          Your 30-Day Free Access pass has been provisioned for <strong className="text-[#121816] font-semibold">{submittedData.agencyName}</strong>.
+        <p className="text-sm text-[#5C6E67] mb-6 leading-relaxed">
+          Someone will reach out to you within 24-48 hours to get your free trial started
         </p>
 
         {/* Confirmation Details Card */}
         <div className="bg-[#EBF2EE]/60 rounded-2xl p-4 text-left mb-6 border border-[#173A32]/10 space-y-2.5">
-          <div className="flex items-center justify-between text-xs pb-2 border-b border-[#173A32]/10">
-            <span className="text-[#5C6E67]">Account Setup</span>
-            <span className="font-semibold text-emerald-700 flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5" /> Instant Activation
-            </span>
+          <div className="text-xs text-[#121816] flex justify-between">
+            <span className="text-[#5C6E67]">Agency:</span>
+            <span className="font-semibold">{submittedData.agencyName}</span>
           </div>
           <div className="text-xs text-[#121816] flex justify-between">
-            <span className="text-[#5C6E67]">Confirmation sent to:</span>
+            <span className="text-[#5C6E67]">Confirmation email:</span>
             <span className="font-semibold truncate max-w-[180px]">{submittedData.email}</span>
           </div>
           <div className="text-xs text-[#121816] flex justify-between">
@@ -138,25 +173,18 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccessSubmit }) => {
             <span className="font-semibold">{submittedData.caregiverCount} Active Caregivers</span>
           </div>
           <div className="text-xs text-[#121816] flex justify-between">
-            <span className="text-[#5C6E67]">VIP Agency Onboarding:</span>
-            <span className="font-semibold text-[#173A32]">Included (1-on-1 Dedicated Specialist)</span>
+            <span className="text-[#5C6E67]">Agency Support:</span>
+            <span className="font-semibold text-[#173A32]">Dedicated Onboarding Specialist</span>
           </div>
         </div>
 
-        <div className="space-y-3">
-          <div className="p-3 bg-amber-50 rounded-xl border border-amber-200/80 text-left flex items-start gap-2.5">
-            <CalendarCheck2 className="w-5 h-5 text-[#EE9D33] shrink-0 mt-0.5" />
-            <p className="text-xs text-amber-900 leading-relaxed">
-              <strong>Check your inbox:</strong> A temporary magic link and scheduling coordinator calendar invitation are on their way.
-            </p>
-          </div>
-
+        <div>
           <button
             type="button"
             onClick={handleReset}
-            className="w-full py-3 px-4 text-xs font-semibold text-[#5C6E67] hover:text-[#173A32] underline hover:no-underline transition-colors"
+            className="w-full py-2.5 px-4 text-xs font-semibold text-[#5C6E67] hover:text-[#173A32] underline hover:no-underline transition-colors cursor-pointer"
           >
-            Register another agency or change details
+            Submit another inquiry
           </button>
         </div>
       </div>
@@ -191,6 +219,16 @@ export const LeadForm: React.FC<LeadFormProps> = ({ onSuccessSubmit }) => {
 
       {/* Actual Form */}
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        {errorMessage && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2.5 text-left text-xs text-red-700">
+            <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="font-semibold">Submission failed</p>
+              <p className="mt-0.5 text-red-600">{errorMessage}</p>
+            </div>
+          </div>
+        )}
+
         {/* Full Name */}
         <div>
           <label htmlFor="fullName" className="block text-xs font-bold text-[#173A32] uppercase tracking-wider mb-1.5">
