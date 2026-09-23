@@ -6,6 +6,7 @@ export interface LeadFormData {
   phone: string;
   agencyName: string;
   caregiverCount: string;
+  message?: string;
 }
 
 export interface FormValidationErrors {
