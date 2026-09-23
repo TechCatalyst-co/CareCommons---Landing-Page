@@ -28,21 +28,6 @@ Open your browser and navigate to `http://localhost:3000` (or `http://localhost:
 
 ---
 
-## ⚙️ Environment Variables
-
-Copy the example environment configuration:
-
-```bash
-cp .env.example .env
-```
-
-Available variables in `.env.example`:
-- `VITE_APP_TITLE`: Application title
-- `VITE_API_BASE_URL`: Backend API base URL
-- `VITE_ENABLE_MOCK_DATA`: Enable/disable local mock data
-
----
-
 ## 🛠️ Available Scripts
 
 - `npm run dev` — Start the local development server with Vite
