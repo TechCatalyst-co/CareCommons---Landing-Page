@@ -77,7 +77,7 @@ export const Footer: React.FC = () => {
               rel="noopener noreferrer"
               className="text-white/60 hover:text-white transition-colors underline hover:no-underline"
             >
-              TechCatalyst
+              Powered by TechCatalyst
             </a>
           </p>
         </div>
