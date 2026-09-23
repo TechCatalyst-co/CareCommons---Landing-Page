@@ -5,7 +5,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Debug CareCommons (Vite)",
-      "url": "http://localhost:5173",
+      "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/src",
       "sourceMapPathOverrides": {
         "webpack:///src/*": "${webRoot}/*"
