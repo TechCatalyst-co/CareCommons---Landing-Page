@@ -1,0 +1,8 @@
+{
+  "name": "CareCommons - Landing Page",
+  "description": "High-converting lead generation landing page for CareCommons home care agency management software.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

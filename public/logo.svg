@@ -1,0 +1,20 @@
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CareCommons">
+  <style>
+    :root {
+      --spruce: #173A32;
+      --sage: #6E9B89;
+      --sage-light: #C8E0D5;
+      --sage-soft: #A3CDBC;
+      --marigold: #EE9D33;
+    }
+  </style>
+	<rect width="48" height="48" rx="13" fill="var(--spruce, #173A32)"/>
+	<circle cx="24" cy="24" r="11" fill="none" stroke="var(--sage, #6E9B89)" stroke-width="1.6" opacity="0.9"/>
+	<line x1="24" y1="24" x2="24" y2="13" stroke="var(--sage-light, #C8E0D5)" stroke-width="2" stroke-linecap="round"/>
+	<line x1="24" y1="24" x2="14.5" y2="29.5" stroke="var(--sage-light, #C8E0D5)" stroke-width="2" stroke-linecap="round"/>
+	<line x1="24" y1="24" x2="33.5" y2="29.5" stroke="var(--sage-light, #C8E0D5)" stroke-width="2" stroke-linecap="round"/>
+	<circle cx="24" cy="13" r="3.4" fill="var(--sage-soft, #A3CDBC)"/>
+	<circle cx="14.5" cy="29.5" r="3.4" fill="var(--sage-soft, #A3CDBC)"/>
+	<circle cx="33.5" cy="29.5" r="3.4" fill="var(--sage-soft, #A3CDBC)"/>
+	<circle cx="24" cy="24" r="5" fill="var(--marigold, #EE9D33)"/>
+</svg>

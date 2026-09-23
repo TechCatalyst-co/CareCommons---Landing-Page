@@ -1,11 +1,61 @@
-<div align="center">
+# CareCommons - Landing Page
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+High-converting lead generation landing page for CareCommons home care agency management software.
 
-  <h1>Built with AI Studio</h2>
+---
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## 🚀 Getting Started
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+Follow these 3 steps to run the project locally:
 
-</div>
+1. **Clone the repository:**
+   ```bash
+   git clone <repo-url>
+   cd carecommons
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+
+Open your browser and navigate to `http://localhost:3000` (or `http://localhost:5173` depending on your Vite configuration).
+
+---
+
+## ⚙️ Environment Variables
+
+Copy the example environment configuration:
+
+```bash
+cp .env.example .env
+```
+
+Available variables in `.env.example`:
+- `VITE_APP_TITLE`: Application title
+- `VITE_API_BASE_URL`: Backend API base URL
+- `VITE_ENABLE_MOCK_DATA`: Enable/disable local mock data
+
+---
+
+## 🛠️ Available Scripts
+
+- `npm run dev` — Start the local development server with Vite
+- `npm run build` — Type-check and build the production bundle
+- `npm run lint` — Lint and validate TypeScript files
+- `npm run type-check` — Perform TypeScript compilation check without emitting files
+- `npm run preview` — Preview the production build locally
+
+---
+
+## 💻 Recommended VS Code Extensions
+
+When opening this project in VS Code, install the recommended extensions:
+- **Tailwind CSS IntelliSense** (`bradlc.vscode-tailwindcss`)
+- **ESLint** (`dbaeumer.vscode-eslint`)
+- **Prettier - Code formatter** (`esbenp.prettier-vscode`)
