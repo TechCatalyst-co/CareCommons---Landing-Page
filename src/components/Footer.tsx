@@ -69,7 +69,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
-          <p>© {new Date().getFullYear()} CareCommons, Inc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} CareCommons. All rights reserved.</p>
           <p className="flex items-center gap-1">
             <a 
               href="https://techcatalyst.co/"
@@ -77,7 +77,7 @@ export const Footer: React.FC = () => {
               rel="noopener noreferrer"
               className="text-white/60 hover:text-white transition-colors underline hover:no-underline"
             >
-              Tech Catalyst
+              TechCatalyst
             </a>
           </p>
         </div>
